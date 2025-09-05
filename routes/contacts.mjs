@@ -1,50 +1,38 @@
 import express from "express";
-import contacts from "../db/mock-contacts.mjs";
+import { db }  from "../db/db-contacts.mjs";
 
 //Code made in ase of success, we do not treat here the error case (id not existing for example)
 
 const contactsRouter = express.Router();
-contactsRouter.get("/", (req, res) => {
+contactsRouter.get("/", async(req, res) => {
+    const contacts = await db.getAllContacts();
     res.json({contacts});
 });
 
-contactsRouter.get("/:id", (req, res) => {
+contactsRouter.get("/:id", async(req, res) => {
     const id = parseInt(req.params.id);
-    const contact = contacts.find(contact => contact.id === id);
+    const contact = await db.getContactById(id);
     res.json({contact});
 });
 
 
-contactsRouter.post("/", (req, res) => {
+contactsRouter.post("/", async (req, res) => {
     const {name, email} = req.body;
-    const id = contacts.length + 1; // Explain why it is not completly right and improve it
-    const newContact={id, name, email};
-    contacts.push(newContact);
+    const newContact = await db.createContact({name, email});
     const message = `Le contact ${newContact.name} a bien été créé !`;
     res.json({message : message, contact : newContact});
 });
 
-contactsRouter.put('/:id', (req, res) => {
+contactsRouter.put('/:id', async(req, res) => {
     const id = parseInt(req.params.id);
     const { name, email } = req.body;
-    const index = contacts.findIndex(contact => contact.id === id);
-    //other way : const index = contacts.findIndex(getContact, id);
-    contacts[index] = { id, name, email };
-    res.json({ message: 'Contact updated', contact: contacts[index] });
+    const contactUpdated = await db.updateContact(id, {name, email});
+    res.json({ message: 'Contact updated', contact: contactUpdated });
 });
 
-/* other way without arrow functions
-function getContact(contact) {
-    if (contact.id == this) {
-        return contact.id;
-    }
-}
-*/
-
-contactsRouter.delete('/:id', (req, res) => {
+contactsRouter.delete('/:id', async(req, res) => {
     const id = parseInt(req.params.id);
-    const index = contacts.findIndex(contact => contact.id === id);
-    contacts.splice(index, 1);
+    let deletedContact = await db.deleteContact(id)
     res.json({ message: 'Contact deleted' });
 });
 
