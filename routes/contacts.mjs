@@ -28,9 +28,18 @@ contactsRouter.put('/:id', (req, res) => {
     const id = parseInt(req.params.id);
     const { name, email } = req.body;
     const index = contacts.findIndex(contact => contact.id === id);
+    //other way : const index = contacts.findIndex(getContact, id);
     contacts[index] = { id, name, email };
     res.json({ message: 'Contact updated', contact: contacts[index] });
 });
+
+/* other way without arrow functions
+function getContact(contact) {
+    if (contact.id == this) {
+        return contact.id;
+    }
+}
+*/
 
 contactsRouter.delete('/:id', (req, res) => {
     const id = parseInt(req.params.id);
