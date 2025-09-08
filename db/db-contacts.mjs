@@ -11,11 +11,14 @@ const con = await mysql.createConnection({
 const db = {
 
     getAllContacts: async () => {
+        //the getAllContacts function waits until the query is finished to execute
+        //if there is some code after the call of this function, it will be executed without waiting the execution of this function
         const [rows] = await con.query('SELECT * FROM contacts');
         return rows;
     },
 
     getContactById: async ( id) => {
+        //this syntax (prepared statement, parameters used in the query) prevents from SQL injections
         const [rows] = await con.query('SELECT * FROM contacts WHERE id = ?', [id]);
         return rows[0];
     },

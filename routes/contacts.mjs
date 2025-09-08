@@ -15,8 +15,8 @@ contactsRouter.get("/:id", async(req, res) => {
     res.json({contact});
 });
 
-
 contactsRouter.post("/", async (req, res) => {
+    //object destructuring
     const {name, email} = req.body;
     const newContact = await db.createContact({name, email});
     const message = `Le contact ${newContact.name} a bien été créé !`;
