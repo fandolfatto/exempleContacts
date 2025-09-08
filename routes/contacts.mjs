@@ -14,7 +14,6 @@ contactsRouter.get("/:id", (req, res) => {
     res.json({contact});
 });
 
-
 contactsRouter.post("/", (req, res) => {
     const {name, email} = req.body;
     const id = contacts.length + 1; // Explain why it is not completly right and improve it
