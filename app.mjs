@@ -17,6 +17,16 @@ app.use(express.json());
 
 app.use('/api/contacts', contactsRouter);
 
+// Si aucune route ne correspondant à l'URL demandée par le consommateur
+// ({ res }) => { ... }  : on utilise la déstructuration disponible en javascript pour extraire res
+// de l'objet argument. Cette fonction fléchée prend un objet en entrée qui a au moins une propriété res , qui est l'objet de
+// réponse Express
+app.use(({ res }) => {
+    const message =
+        "Impossible de trouver la ressource demandée ! Vous pouvez essayer une autre URL.";
+    res.status(404).json(message);
+});
+
 // On démarre le serveur et on lui dit d’écouter sur le port défini
 // Une fois lancé, le message est affiché dans la console
 app.listen(port, () => {
