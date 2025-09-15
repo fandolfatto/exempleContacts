@@ -1,7 +1,5 @@
 import mysql from 'mysql2/promise';
 
-
-
 const db = {
 
     connectToDatabase :async () => {
