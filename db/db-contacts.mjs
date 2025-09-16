@@ -1,32 +1,51 @@
 import mysql from 'mysql2/promise';
 
+async function getPoolConnections() {
+    const pool = mysql.createPool({
+        host: "localhost",
+        user: "root", //use another user
+        password: "P@ssw0rd",
+        port: 3308, //usually we use the 3306 port
+        database: "app_contacts",
+    });
+    return pool;
+};
+
+const pool = getPoolConnections();
+
 const db = {
 
-    connectToDatabase :async () => {
-        const con = mysql.createConnection({
-            host: "localhost",
-            user: "root", //use another user
-            password: "P@ssw0rd",
-            port: 3308, //usually we use the 3306 port
-            database: "app_contacts",
-        });
-        return con;
-    },
-
     getAllContacts: async () => {
-        let con;
+        let pool, con;
         try {
             //the getAllContacts function waits until the query is finished to execute
             //if there is some code after the call of this function, it will be executed without waiting the execution of this function
-            con = await db.connectToDatabase();
+            con = pool.getConnection();
             const [rows] = await con.query('SELECT * FROM contacts');
             return rows;
         } catch(err) {
             console.log(err);
             throw err;
         } finally {
-            if (con) await db.disconnectFromDatabase(con);
+            if (con) con.release();
         }
+
+        let connection;
+        try {
+// Emprunter une connexion depuis le pool
+            connection = await pool.getConnection();
+            const [rows] = await connection.execute('SELECT * FROM users');
+            console.log('Liste des utilisateurs :', rows);
+        } catch (error) {
+            console.error('Erreur lors de la récupération des utilisateurs :', error);
+            throw error;
+        } finally {
+// Retourner la connexion au pool
+            if (connection) connection.release();
+        }
+
+
+
     },
 
     getContactById: async ( id) => {
