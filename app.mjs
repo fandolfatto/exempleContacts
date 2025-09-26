@@ -11,6 +11,9 @@ const port = process.env.PORT || 3000;
 
 app.use(express.json());
 
+//swaggerUI.serve : get the files (html, css, js) for the user interface
+//swaggerUI.setup : takes our parameters with the specification openApiSpecification (see swagger.mjs)
+//explorer : true : research possible in the swagger web page
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(openApiSpecification, {explorer :true}));
 
 // On crée une route GET sur la racine ("/")
