@@ -8,7 +8,7 @@ const contactsRouter = express.Router();
 
 /**
  * @openapi
- * /:
+ * /api/contacts:
  *   get:
  *     summary: returns a list of contacts.
  *     description: get all contacts
