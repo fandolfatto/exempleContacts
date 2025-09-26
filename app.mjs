@@ -1,5 +1,8 @@
 //On importe le module express (il doit être installé avec "npm install express")
 import express from 'express';
+import swaggerUi from 'swagger-ui-express';
+
+import {openApiSpecification} from './swagger.mjs'
 import contactsRouter from './routes/contacts.mjs';
 // On crée une application Express
 const app = express();
@@ -7,6 +10,8 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(express.json());
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(openApiSpecification, {explorer :true}));
 
 // On crée une route GET sur la racine ("/")
 // Quand un utilisateur ouvre http://localhost:3000/ dans son navigateur,

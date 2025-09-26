@@ -6,6 +6,24 @@ import {isValidId, isValidEmail} from "../helper.mjs";
 
 const contactsRouter = express.Router();
 
+/**
+ * @openapi
+ * /:
+ *   get:
+ *     summary: returns a list of contacts.
+ *     description: get all contacts
+ *     responses:
+ *       200:
+ *         description: Returns an array of contacts.
+ *         content:
+ *             application/json:
+ *              schema:
+ *                  type: array
+ *                  items:
+ *                    $ref: "#/components/schemas/contact"
+ *       500:
+ *         description: system exception describing the error.
+ */
 contactsRouter.get("/", async(req, res) => {
     try {
         const contacts = await db.getAllContacts();
