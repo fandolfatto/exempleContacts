@@ -1,21 +1,21 @@
 import express from "express";
 import { db }  from "../db/db-contacts.mjs";
 import {isValidId, isValidEmail} from "../helper.mjs";
-
+import auth from "../auth/auth.mjs";
 //Code made in ase of success, we do not treat here the error case (id not existing for example)
 
 const contactsRouter = express.Router();
 
-contactsRouter.get("/", async(req, res) => {
+contactsRouter.get("/", auth, async(req, res) => {
     try {
         const contacts = await db.getAllContacts();
         res.json({contacts});
     } catch (error) {
-        res.status(500).json({error: error});
+        res.status(500).json({error: error.message});
     }
 });
 
-contactsRouter.get("/:id", async(req, res) => {
+contactsRouter.get("/:id", auth, async(req, res) => {
     try {
         const id = parseInt(req.params.id);
         if (!isValidId(id)) {
@@ -32,7 +32,7 @@ contactsRouter.get("/:id", async(req, res) => {
     }
 });
 
-contactsRouter.post("/", async (req, res) => {
+contactsRouter.post("/", auth, async (req, res) => {
     try {
         //object destructuring
         const {name, email} = req.body;
@@ -47,7 +47,7 @@ contactsRouter.post("/", async (req, res) => {
     }
 });
 
-contactsRouter.put('/:id', async(req, res) => {
+contactsRouter.put('/:id', auth, async(req, res) => {
     try {
         const id = parseInt(req.params.id);
         const {name, email} = req.body;
@@ -63,7 +63,7 @@ contactsRouter.put('/:id', async(req, res) => {
     }
 });
 
-contactsRouter.delete('/:id', async(req, res) => {
+contactsRouter.delete('/:id', auth, async(req, res) => {
     try {
         const id = parseInt(req.params.id);
         let deletedContact = await db.deleteContact(id)

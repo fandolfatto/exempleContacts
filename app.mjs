@@ -1,6 +1,8 @@
 //On importe le module express (il doit être installé avec "npm install express")
 import express from 'express';
 import contactsRouter from './routes/contacts.mjs';
+import usersRouter from './routes/users.mjs';
+
 // On crée une application Express
 const app = express();
 // On définit le port sur lequel le serveur va écouter
@@ -16,6 +18,8 @@ app.use(express.json());
 //})
 
 app.use('/api/contacts', contactsRouter);
+
+app.use('/api/users', usersRouter);
 
 // Si aucune route ne correspondant à l'URL demandée par le consommateur
 // ({ res }) => { ... }  : on utilise la déstructuration disponible en javascript pour extraire res
