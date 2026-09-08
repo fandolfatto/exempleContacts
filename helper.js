@@ -1,5 +1,5 @@
 function isValidId(value) {
-    return Number.isInteger(Number(value)) && Number(value) > 0;
+    return Number.isInteger(value) && value > 0;
 }
 
 function isValidEmail(email) {
