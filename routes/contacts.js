@@ -62,6 +62,7 @@ contactsRouter.post("/", async (req, res) => {
 contactsRouter.put('/:id', async(req, res) => {
     try {
         const id = Number(req.params.id);
+        // we could check the id again, like for the get with id
         const {name, email} = req.body;
         const resUpdateContactNb = await db.updateContact(id, {name, email});
         if (resUpdateContactNb === 0) {
