@@ -10,7 +10,7 @@ const options = {
         },
         servers : [
             {
-                url : 'http://localhost:3000/',
+                url : 'http://localhost:3001/',
             },
         ],
         "components":
@@ -31,7 +31,7 @@ const options = {
             },
         }
     },
-    apis: ['./routes/*.mjs'], // where to find information to generate documentation
+    apis: ['./routes/*.js'], // where to find information to generate documentation
 };
 
 const openApiSpecification = swaggerJsdoc(options);
