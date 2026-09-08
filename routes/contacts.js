@@ -3,7 +3,8 @@ import { db }  from "../db/db-contacts.js";
 import {isValidId, isValidEmail} from "../helper.js";
 
 // As a general rule, for security reasons, we do not show the exact error message.
-// We prefer to display a generic message such as "An internal error occurred." // // For pedagogical reasons, we sometimes show the actual error message, // in order to demonstrate how it works and what kind of messages can be returned.
+// We prefer to display a generic message such as "An internal error occurred."
+// For pedagogical reasons, we sometimes show the actual error message, // in order to demonstrate how it works and what kind of messages can be returned.
 const contactsRouter = express.Router();
 
 contactsRouter.get("/", async(req, res) => {
