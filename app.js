@@ -2,8 +2,8 @@
 import express from 'express';
 import swaggerUi from 'swagger-ui-express';
 
-import {openApiSpecification} from './swagger.mjs'
-import contactsRouter from './routes/contacts.mjs';
+import {openApiSpecification} from './swagger.js'
+import contactsRouter from './routes/contacts.js';
 // On crée une application Express
 const app = express();
 // On définit le port sur lequel le serveur va écouter
@@ -12,7 +12,7 @@ const port = process.env.PORT || 3000;
 app.use(express.json());
 
 //swaggerUI.serve : get the files (html, css, js) for the user interface
-//swaggerUI.setup : takes our parameters with the specification openApiSpecification (see swagger.mjs)
+//swaggerUI.setup : takes our parameters with the specification openApiSpecification (see swagger.js)
 //explorer : true : research possible in the swagger web page
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(openApiSpecification, {explorer :true}));
 
